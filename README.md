@@ -36,8 +36,9 @@ refresh portions of the webpage
 
 
 #### What is Backbone?
-- Backbone.JS is a framework that brings the MVC pattern to JavaScript 
-- It is very lightweight (7.6kb) and requires few dependencies (only hard dependency is underscore.js)
+- Backbone.JS is a framework that brings the MVC pattern to JavaScript
+- It is very lightweight (7.6kb) and requires few dependencies (only hard
+  dependency is underscore.js)
 - Official website: http://backbonejs.org
 
 
@@ -60,11 +61,11 @@ attributes
 ```
 // Here we define the structure of our DATA MODEL
 var Todo = Backbone.Model.extend({
-  
+
   // Default values when a new instance is created
   defaults: {
-     title: '',
-     completed: false
+    title: '',
+    completed: false
  }
 });
 ```
@@ -93,14 +94,14 @@ todo.get('created_at'); // "Wed Sep 12 2012 12:51:17 GMT-0400 (EDT)"
 - These methods play the role of the ***Controller*** in the MVC pattern
 ```
 var Todo = Backbone.Model.extend({
-   defaults: {
-       title: '',
-       completed: false
-   },
-   // Our own model method
-   completeTodo: function(){
-       this.set('completed', true);
-   }
+  defaults: {
+    title: '',
+    completed: false
+  },
+  // Our own model method
+  completeTodo: function(){
+    this.set('completed', true);
+  }
 });
 ```
 
@@ -122,26 +123,26 @@ where to render it.
 - `initialize` is the first function called when a view gets instantiated
 ```
 var DocumentRow = Backbone.View.extend({
-   // HTML tag this view is going to generate
-   tagName: "li",
-   
-   // CSS class applied to the view tag
-   className: "document-row",
-  
-   // Where the view will be rendered
-   el: "#container",
+  // HTML tag this view is going to generate
+  tagName: "li",
 
-   // Init function for the view (like a constructor, as soon as it is
-   // rendered, this happens!)
-   // listen to the model, will rerender if there are changes to the model
-   initialize: function() {
-       this.listenTo(this.model, "change",this.render);
-   },
+  // CSS class applied to the view tag
+  className: "document-row",
 
-   render: function() {
-       // Do some DOM manipulation 
-       // to render things here
-   }
+  // Where the view will be rendered
+  el: "#container",
+
+  // Init function for the view (like a constructor, as soon as it is
+  // rendered, this happens!)
+  // listen to the model, will rerender if there are changes to the model
+  initialize: function() {
+    this.listenTo(this.model, "change",this.render);
+  },
+
+  render: function() {
+    // Do some DOM manipulation
+    // to render things here
+  }
 });
 ```
 
@@ -151,18 +152,18 @@ var DocumentRow = Backbone.View.extend({
 rendered (in our case, #container)
 ```
 var DocumentRow = Backbone.View.extend({
-   // HTML tag this view is going to generate
-   tagName: "li",
-   
-    // Where the view will be rendered
-   el: "#container",
+  // HTML tag this view is going to generate
+  tagName: "li",
 
-   // ...
+  // Where the view will be rendered
+  el: "#container",
 
-   render: function() {
-       // A jQuery object to render things
-       this.$el.html("View rendering text");
-   }
+  // ...
+
+  render: function() {
+    // A jQuery object to render things
+    this.$el.html("View rendering text");
+  }
 });
 ```
 
@@ -174,10 +175,10 @@ its constructor function
 as well
 ```
 var row = new DocumentRow({
-   model: doc,
-   // Now the view is dynamic based
-   // on the model ID
-   el: "document-row-" + doc.id
+  model: doc,
+  // Now the view is dynamic based
+  // on the model ID
+  el: "document-row-" + doc.id
 });
 ```
 
@@ -189,10 +190,10 @@ var row = new DocumentRow({
 ```
 // HTML template
 <script type="text/template" id="item">
-   <div class="view">
-       <input class="toggle" type="checkbox">
-       <label><%- title %></label>
-   </div>
+  <div class="view">
+    <input class="toggle" type="checkbox">
+    <label><%- title %></label>
+  </div>
 </script>
 
 var TodoView = Backbone.View.extend({
@@ -228,12 +229,12 @@ a list of models
 - They can sync with a REST backend when a URL is passed to them
 ```
 var TodoList =
- Backbone.Collection.extend({
-   
-   model: Todo,
-   
-   // Collections can sync with REST WS
-   url: "/todos"
+  Backbone.Collection.extend({
+
+  model: Todo,
+
+  // Collections can sync with REST WS
+  url: "/todos"
 
 });
 
@@ -251,13 +252,13 @@ var AppView = Backbone.View.extend({
   el: '#todoapp',
   //...
   addOne: function(todo){
-     // Append every todo to the list
-     var view = new TodoView({model: todo});
-     this.$el.append(view.render().el);
+    // Append every todo to the list
+    var view = new TodoView({model: todo});
+    this.$el.append(view.render().el);
   },
   render: function(){
-     // Iterate through the collection
-     todoList.each(this.addOne, this);
+    // Iterate through the collection
+    todoList.each(this.addOne, this);
   }
 });
 
@@ -274,21 +275,21 @@ Underscore.js
 render function
 ```
 var SearchView = Backbone.View.extend({
-   initialize: function(){
-       this.render();
-   },
+  initialize: function(){
+    this.render();
+  },
 
-   render: function(){
+  render: function(){
 
-     // Compile the template with Handlebars
-     var src = $('#template').html();
-     var template = Handlebars.compile(src);
+    // Compile the template with Handlebars
+    var src = $('#template').html();
+    var template = Handlebars.compile(src);
 
-     // Pass the data model to get the HTML
-     var html = template(this.model.toJSON());
+    // Pass the data model to get the HTML
+    var html = template(this.model.toJSON());
 
-     // Load the HTML into the Backbone "$el"
-     this.$el.html(html);
+    // Load the HTML into the Backbone "$el"
+    this.$el.html(html);
    }
 });
 ```
@@ -306,7 +307,7 @@ var SearchView = Backbone.View.extend({
 - A collection expects an array from the server while a model expects an object
 ```
 var Books = Backbone.Collection.extend({
-   url: '/books'
+  url: '/books'
 });
 
 GET  /books/ .... collection.fetch();
@@ -346,7 +347,7 @@ var object = {};
 _.extend(object, Backbone.Events);
 
 object.on("alert", function(msg) {
-   alert("Triggered " + msg);
+  alert("Triggered " + msg);
 });
 
 object.trigger("alert", "an event");
@@ -373,19 +374,19 @@ function
 ```
 var Router = Backbone.Router.extend({
 
-   routes: {
-     "help": "help",   
-     "search/:query": "search",
-     "search/:query/:page": "search"  
-   },
+  routes: {
+    "help": "help",   
+    "search/:query": "search",
+    "search/:query/:page": "search"  
+  },
 
-   help: function () {
-       //...
-   },
+  help: function () {
+    //...
+  },
 
-   search: function (query, page) {
-       //...
-   }
+  search: function (query, page) {
+    //...
+  }
 ```
 
 
@@ -406,7 +407,7 @@ router.on("route:help", function(page) {
 });
 
 
-// Updates browser URL 
+// Updates browser URL
 // and triggers the route function
 router.navigate("help/troubleshooting",
  {trigger: true});
@@ -437,7 +438,7 @@ decide how to render the view.
 #### Enter Marionette
 - That's where Marionette comes into play. Unlike Backbone, it is opinionated
 and decides how things should be done.
-- Marionette uses Backbone 
+- Marionette uses Backbone
 - It can be seen as an additional layer on top of Backbone, which gets
 manipulated like a puppet, hence the name
 
@@ -454,10 +455,10 @@ manipulated like a puppet, hence the name
 - Provides a single entry point to render our application
 ```
 var App = Marionette.Application.extend({
-   region: '#root-element',
+  region: '#root-element',
 
-   onStart: function() {
-       this.showView(new RootView());
+  onStart: function() {
+    this.showView(new RootView());
    }
 });
 
@@ -471,8 +472,8 @@ myApp.start();
 - No need to implement the render() function anymore!
 ```
 var MyView = Marionette.View.extend({
-  	tagName: 'h1',
-   	template: '#template'
+  tagName: 'h1',
+  template: '#template'
 });
 
 var myView = new MyView();
@@ -487,19 +488,19 @@ var inboxChan = Backbone.Radio.channel('inbox');
 
 var ContactView = Marionette.View.extend({
 
-   template: '#contact-template',
+  template: '#contact-template',
 
-   initialize: function() {
-     this.listenTo(inboxChan, 'show:email',
- this.showContact);
-     this.listenTo(inboxChan, 'show:inbox',
- this.showAd);
+  initialize: function() {
+    this.listenTo(inboxChan, 'show:email',
+    this.showContact);
+    this.listenTo(inboxChan, 'show:inbox',
+    this.showAd);
 },
 showContact: function(emailObject) {
-       //…
+  //…
 },
 showAd: function() {
-       //…
+  //…
 }
 ```
 
@@ -509,7 +510,7 @@ showAd: function() {
 - No need to implement the render() function anymore!
 ```
 var MyView = Marionette.View.extend({
-   	template: '#template'
+  template: '#template'
 });
 
 var myView = new MyView();
@@ -522,8 +523,8 @@ myView.render();
 - No need to provide any render or initialize method!
 ```
 var TodoListView = Marionette.CollectionView.extend({
-   childView: TodoView,
-collection: todoCollection,
+  childView: TodoView,
+  collection: todoCollection,
 });
 ```
 
@@ -535,17 +536,17 @@ needed
 ```
 var RootView = Marionette.View.extend({
 
-   regions: {
-       header: '#navbar',
-       footer: 'footer'
-   },
+  regions: {
+    header: '#navbar',
+    footer: 'footer'
+  },
 
-   initialize: function() {
-       this.getRegion('header')
-.show(new HeaderView());
-       this.getRegion('footer')
-.show(new FooterView());
-   }
+  initialize: function() {
+    this.getRegion('header')
+    .show(new HeaderView());
+    this.getRegion('footer')
+    .show(new FooterView());
+  }
 });
 ```
 
@@ -603,9 +604,8 @@ describe("Player", function() {
 - For instance, this example replaces the `fetch()` function with a fake one
 that sets testing data to the model so we can test without making HTTP requests
 ```
-spyOn(todoCollection, "fetch")
-.and.callFake(function() {
-//Set fake data for testing
-   			todoCollection.model = [...];
+spyOn(todoCollection, "fetch").and.callFake(function() {
+  //Set fake data for testing
+  todoCollection.model = [...];
 });
 ```
