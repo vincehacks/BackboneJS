@@ -12,3 +12,76 @@
 * The view template is almost ready for you to use: #plate-template
 * Complete the template, hook it up to your view and render it!
 ****************************************************************************-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Lab 4 for Backbone.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+</head>
+<body id="container">
+
+<!-- Update the template here to render the right information -->
+<script type="text/template" id="plate-template">
+    <div class="col-md-4" style="margin-top: 40px">
+        <h2><%- title %></h2>
+        <img src="<%- picture %>" class="img-fluid" alt="Responsive image">
+        <p><%- description%></p>
+        <p> <h2 class="float-left">$<%- price%></h2><a class="btn btn-primary float-right" href="#" role="button">Add to cart &raquo;</a></p>
+    </div>
+</script>
+
+
+<script type="text/javascript">
+    'use strict';
+
+    // Creating the definition for my MODEL
+    var LicensePlate = Backbone.Model.extend({
+
+    });
+
+    // Creating a new instance of LicensePlate Model
+    var plate = new LicensePlate({
+        "_id": "5a0c8ab22d8dc1f7fa170c9d",
+        "onSale": false,
+        "picture": "http://angulartraining.com/plates/GA.jpg",
+        "title": "2008 Georgia license plate",
+        "price": 8,
+        "year": 2008,
+        "state": "GA",
+        "description": "A beautiful plate from the peach state"
+    });
+
+    <!-- Write your Backbone View code here -->
+
+    // Creating the definition for the VIEW
+		var View = Backbone.View.extend({
+
+			// Where the view will be rendered, in this case it will be the body
+			el: "#container",
+			template: _.template($('#plate-template').html()),
+
+			// Init function for the view, changes are automatically re-rendered
+			initialize: function() {
+				this.render();
+				this.listenTo(this.model,"change",this.render);
+			},
+
+			// The el will put html into body
+			render: function() {
+				this.$el.html(this.template(this.model.toJSON()));
+			}
+		});
+
+		// Instance of the View
+		var row = new View({
+			model: plate
+		});
+
+</script>
+</body>
+</html>

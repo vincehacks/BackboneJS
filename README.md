@@ -26,59 +26,60 @@ HTML or CSS
 
 
 #### Ajax
-- Then came into play AJAX and jQuery
+- Then came into play AJAX and jQuery around 2005
+- Instead of refreshing the webpage, Ajax would just rebuild parts that needed
+to be updated, as oppose to rebuilding the whole page
+- Ajax will would just return XML, but nowadays they use JSON because it's
+lighter
 - The main idea was to load content asynchronously in the background to
 refresh portions of the webpage
 
 
 #### What is Backbone?
-- Backbone.JS is a framework that brings the MVC (Model - View - Controller)
-pattern to JavaScript 
-- It is very lightweight (7.6kb) packed and zipped and requires few
-dependencies (only hard dependency is underscore.js)
+- Backbone.JS is a framework that brings the MVC pattern to JavaScript 
+- It is very lightweight (7.6kb) and requires few dependencies (only hard dependency is underscore.js)
 - Official website: http://backbonejs.org
 
 
 #### Why Backbone?
 - Backbone.JS is unopiniated: There are different ways to solve any problem
-- Its learning curve is very short (we can do it in two days!)
+- Its learning curve is very low (can do it in two days!)
 - It does not require a lot of set-up (unlike Angular for instance)
 
 
 #### What are Backbone Models?
-- ***Models*** represent the data of your application
+- ***Models represent the data of your application***
 - In Backbone, a model is a set of keys and values, an internal table of data
 attributes
 - Models handle syncing data with a persistence layer (usually a REST API)
 
 
-#### Simple Model
+#### Simple Model (Step 1)
 - We create the definition of our model using `Backbone.Model.extend`
 - Models can have several attributes or functions http://backbonejs.org/#Model
 ```
-// Here we define the structure
-// of our data model
+// Here we define the structure of our DATA MODEL
 var Todo = Backbone.Model.extend({
-// Default values when a new 
-// instance is created
-   defaults: {
-       title: '',
-       completed: false
-   }
+  
+  // Default values when a new instance is created
+  defaults: {
+     title: '',
+     completed: false
+ }
 });
 ```
 
 
-#### Instance of a Model
+#### Instance of a Model (Step 2)
 - Once our Model definition is done, we can create an instance of it
 - The constructor function can be used to pass the value of the data model
-- Simple getters / setters can then be used to read / write the model
+- Simple getters/setters can then be used to read/write the model
 ```
 // Create object with attributes
 var todo = new Todo({title: 'Learn Backbone', completed: false});
 
-todo.get('title'); // "Learn Backbone"
-todo.get('completed'); // false
+todo.get('title');      // "Learn Backbone"
+todo.get('completed');  // false
 todo.get('created_at'); // undefined
 
 // Setting a value
@@ -89,7 +90,7 @@ todo.get('created_at'); // "Wed Sep 12 2012 12:51:17 GMT-0400 (EDT)"
 
 #### Controller Methods
 - We can add our own methods to any Model definition
-- These methods play the role of the Controller in the MVC pattern
+- These methods play the role of the ***Controller*** in the MVC pattern
 ```
 var Todo = Backbone.Model.extend({
    defaults: {
@@ -108,8 +109,8 @@ var Todo = Backbone.Model.extend({
 
 
 #### What are Backbone Views?
-- ***Views*** are atomic chunks of user interface
-- They render data from a specific model
+- ***Views are atomic chunks of user interface***
+- Purpose is to connect to a model and render it!
 - Views listen to the model "change" events, and react or re-render themselves
 appropriately
 
@@ -123,15 +124,18 @@ where to render it.
 var DocumentRow = Backbone.View.extend({
    // HTML tag this view is going to generate
    tagName: "li",
+   
    // CSS class applied to the view tag
-className: "document-row",
-    // Where the view will be rendered
-el: "#container",
+   className: "document-row",
+  
+   // Where the view will be rendered
+   el: "#container",
 
-   // Init function for the view
+   // Init function for the view (like a constructor, as soon as it is
+   // rendered, this happens!)
+   // listen to the model, will rerender if there are changes to the model
    initialize: function() {
-       this.listenTo(this.model, "change",
-this.render);
+       this.listenTo(this.model, "change",this.render);
    },
 
    render: function() {
@@ -192,14 +196,13 @@ var row = new DocumentRow({
 </script>
 
 var TodoView = Backbone.View.extend({
-   tagName: 'li',
-   template: _.template($('#item').html()),
+  tagName: 'li',
+  template: _.template($('#item').html()),
 
-   render: function(){
-       // We render using our template
-       this.$el.html(
-  this.template(this.model.toJSON()));
-   		}
+  render: function(){
+    // We render using our template
+    this.$el.html(this.template(this.model.toJSON()));
+  }
 });
 ```
 
@@ -226,9 +229,12 @@ a list of models
 ```
 var TodoList =
  Backbone.Collection.extend({
+   
    model: Todo,
+   
    // Collections can sync with REST WS
    url: "/todos"
+
 });
 
 // Instance of the Collection
@@ -247,7 +253,7 @@ var AppView = Backbone.View.extend({
   addOne: function(todo){
      // Append every todo to the list
      var view = new TodoView({model: todo});
- this.$el.append(view.render().el);
+     this.$el.append(view.render().el);
   },
   render: function(){
      // Iterate through the collection
