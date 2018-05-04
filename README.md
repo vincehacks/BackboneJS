@@ -155,7 +155,7 @@ var DocumentRow = Backbone.View.extend({
    tagName: "li",
    
     // Where the view will be rendered
-el: "#container",
+   el: "#container",
 
    // ...
 
