@@ -1,0 +1,42 @@
+<!--***************************************************************************
+* Created by Vince Chang
+*
+* Lab 12 - Testing Backbone
+*
+* In this lab, we’re going to write a couple of tests.
+*
+* Your mission: Start from the directory jasmine-2.8.0. Use SpecRunner.html to
+* see the sample tests in action.
+* Then create your own test spec that will mock the fetch method of our
+* collection to return two fake license plate instead (you can get that data
+* from one of our early labs)
+* Then make sure that the CollectionView will have two LicensePlate models to
+* render, and that the data from those models is what we expect (same title,
+* same picture, etc.)
+****************************************************************************-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Jasmine Spec Runner v2.8.0</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.8.0/jasmine_favicon.png">
+  <link rel="stylesheet" href="lib/jasmine-2.8.0/jasmine.css">
+
+  <script src="lib/jasmine-2.8.0/jasmine.js"></script>
+  <script src="lib/jasmine-2.8.0/jasmine-html.js"></script>
+  <script src="lib/jasmine-2.8.0/boot.js"></script>
+
+  <!-- include source files here... -->
+  <script src="src/Player.js"></script>
+  <script src="src/Song.js"></script>
+
+  <!-- include spec files here... -->
+  <script src="spec/SpecHelper.js"></script>
+  <script src="spec/PlayerSpec.js"></script>
+
+</head>
+
+<body>
+</body>
+</html>

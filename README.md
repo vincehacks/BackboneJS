@@ -333,10 +333,9 @@ collection's request to the server has failed
 
 #### Events
 - Events is a module that can be mixed into any object, giving the object the
-ability to bind and trigger custom named events.
-- Events can be registered on a view as illustrated here
-- All DOM events are supported. As you can see here, events can be bound to any
-HTML element of the view. Here we bind to specific CSS classes.
+ability to bind and trigger custom named events
+- All DOM events are supported. Events can be bound to any HTML element of the
+view. Here we bind to specific CSS classes.
 - A view can also listen to model updates so that it can refresh its template
 accordingly.
 - This is achieved with the listenTo function, passing the model as a first
@@ -542,10 +541,8 @@ var RootView = Marionette.View.extend({
   },
 
   initialize: function() {
-    this.getRegion('header')
-    .show(new HeaderView());
-    this.getRegion('footer')
-    .show(new FooterView());
+    this.getRegion('header').show(new HeaderView());
+    this.getRegion('footer').show(new FooterView());
   }
 });
 ```
@@ -555,24 +552,45 @@ var RootView = Marionette.View.extend({
 - All of these events are triggered during the view lifecycle.
 - You can implement a handler for each of them, for instance: `onDetach()`
 would be called when the `detach` event happens
+```
+Before:render  // Before rendering el
 
+Render    // el is ready, not in the DOM yet         
+
+Before:attach  // Before first DOM rendering
+
+Attach    // el is in the DOM
+
+Dom:refresh // every time render() is called
+
+Before:destroy   // Before destroying
+
+Before:detach // Before removing from DOM
+
+Dom:remove // every time render() is called
+
+Detach  // el removed from DOM
+
+Destroy // View is completely gone
+```
 
 ### Testing Backbone
 
 
 #### Jasmine
-- Jasmine is Behavior Driven Development framework for testing Javascript
-applications
+- Jasmine is Behavior Driven Development framework for testing JavaScript apps
 - Official website: https://jasmine.github.io/
 ```
+// This string is important because it shows up in the test reports
 describe("A suite is just a function",
   function() {
-   var a;
+    var a;
 
-   it("and so is a spec", function() {
-       a = true;
-       expect(a).toBe(true);
-   });
+    // Every 'it' defines a unit test, the text goes into the report as well
+    it("and so is a spec", function() {
+        a = true;
+        expect(a).toBe(true);
+    });
 });
 ```
 
@@ -583,18 +601,18 @@ describe("A suite is just a function",
 with the expect function and assertions
 ```
 describe("Player", function() {
- var player;
- var song;
+  var player;
+  var song;
+  // This runs before EVERY test, so tests are independent of each other
+  beforeEach(function() {
+    player = new Player();
+    song = new Song();
+  });
 
- beforeEach(function() {
-   player = new Player();
-   song = new Song();
- });
-
- it("should be able to play a Song", function() {
-   player.play(song);
-   expect(player.currentlyPlayingSong)
-.toEqual(song);
+  // This is a unit test
+  it("should be able to play a Song", function() {
+    player.play(song);
+    expect(player.currentlyPlayingSong).toEqual(song);
  });
 ```
 
