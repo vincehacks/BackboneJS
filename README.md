@@ -14,6 +14,10 @@ Email: al@interstate21.com </br>
 
 # Day 1
 
+- This course illustrates the use of BackboneJS. The exercises in the labs are
+creating the front-end for a website that allows users to shop for different
+license plates. Slowly integrating Marionette on top of Backbone and
+experimenting with Jasmine Testing Framework.
 
 #### Introduction to Backbone
 - In the past, all of the front-end code (HTML, JS, CSS) was generated from the
