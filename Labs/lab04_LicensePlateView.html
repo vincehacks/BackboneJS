@@ -61,26 +61,26 @@
     // Creating the definition for the VIEW
     var View = Backbone.View.extend({
 
-  	  // Where the view will be rendered, in this case it will be the body
-  	  el: "#container",
-  		template: _.template($('#plate-template').html()),
+      // Where the view will be rendered, in this case it will be the body
+      el: "#container",
+      template: _.template($('#plate-template').html()),
 
-  		// Init function for the view, changes are automatically re-rendered
-  		initialize: function() {
-  			this.render();
-  			this.listenTo(this.model,"change",this.render);
-  		},
+      // Init function for the view, changes are automatically re-rendered
+      initialize: function() {
+        this.render();
+        this.listenTo(this.model,"change",this.render);
+      },
 
-  		// The el will put html into body
-  		render: function() {
-  			this.$el.html(this.template(this.model.toJSON()));
-  		}
-		});
+      // The el will put html into body
+      render: function() {
+        this.$el.html(this.template(this.model.toJSON()));
+      }
+    });
 
-		// Instance of the View
-		var row = new View({
-			model: plate
-		});
+    // Instance of the View
+    var row = new View({
+      model: plate
+    });
 
   </script>
 </body>
