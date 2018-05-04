@@ -27,47 +27,47 @@
 </head>
 <body>
 
-    <script type="text/javascript">
-        'use strict';
+  <script type="text/javascript">
+    'use strict';
 
-        // Creating the definition for the MODEL
-        var HelloWorld = Backbone.Model.extend({
-          defaults: {
-              message: "Backbone World"
-          },
-          helloWorld: function() {
-              return "Hello "+ this.get('message') +"!";
-          }
-        });
+    // Creating the definition for the MODEL
+    var HelloWorld = Backbone.Model.extend({
+      defaults: {
+        message: "Backbone World"
+      },
+      helloWorld: function() {
+        return "Hello "+ this.get('message') +"!";
+      }
+    });
 
-        <!-- Write your Backbone code here -->
+    // Write your Backbone code here
 
-        // Creating an instance of my Model, passed my name instead of default
-        var HiWorldModel = new HelloWorld({message: "Vince"});
+    // Creating an instance of my Model, passed my name instead of default
+    var HiWorldModel = new HelloWorld({message: "Vince"});
 
-        // Creating the definition for the VIEW
-				var View = Backbone.View.extend({
+    // Creating the definition for the VIEW
+    var View = Backbone.View.extend({
 
-					// Where the view will be rendered, in this case it will be the body
-					el: "body",
+      // Where the view will be rendered, in this case it will be the body
+      el: "body",
 
-					// Init function for the view, changes are automatically re-rendered
-					initialize: function() {
-						this.render();
-						this.listenTo(this.model,"change",this.render);
-					},
+      // Init function for the view, changes are automatically re-rendered
+      initialize: function() {
+        this.render();
+        this.listenTo(this.model,"change",this.render);
+      },
 
-					// The el will put html into body and what is output is Hello World
-					render: function() {
-						this.$el.html(this.model.helloWorld());
-					}
-				});
+      // The el will put html into body and what is output is Hello World
+      render: function() {
+        this.$el.html(this.model.helloWorld());
+      }
+    });
 
-				// Instance of the View
-				var row = new View({
-					model: HiWorldModel
-				});
+    // Instance of the View
+    var row = new View({
+      model: HiWorldModel
+    });
 
-    </script>
+  </script>
 </body>
 </html>
