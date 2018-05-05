@@ -88,30 +88,30 @@ $(function() {
 
   // Define a new View for License Plates
   var LicensePlateView = Backbone.View.extend({
-      tagName:  "div",
-      attributes: {class: 'col-md-4', style: 'margin-top: 40px'},
+    tagName:  "div",
+    attributes: {class: 'col-md-4', style: 'margin-top: 40px'},
 
-      initialize: function () {
-          this.render();
-      },
-      // This is the new way of how Handlebars takes over!
-      render: function(){
+    initialize: function () {
+      this.render();
+    },
+    // This is the new way of how Handlebars takes over!
+    render: function(){
 
-          // Compile the template with Handlebars
-          var src = $('#template').html();
-          var template = Handlebars.compile(src);
+      // Compile the template with Handlebars
+      var src = $('#template').html();
+      var template = Handlebars.compile(src);
 
-          // Pass the data model to get the HTML
-          var html = template(this.model.toJSON());
+      // Pass the data model to get the HTML
+      var html = template(this.model.toJSON());
 
-          // Load the HTML into the Backbone "$el"
-          this.$el.html(html);
-          return this;
-      }
+      // Load the HTML into the Backbone "$el"
+      this.$el.html(html);
+      return this;
+    }
   });
 
   var LicensePlateList = Backbone.Collection.extend({
-      model: LicensePlate
+    model: LicensePlate
   });
 
   var plateList = new LicensePlateList(plates);
@@ -120,21 +120,20 @@ $(function() {
   // Defining a View for App, this still uses Underscore, not handlebars!
   var AppView = Backbone.View.extend({
 
-      el: "#container",
+    el: "#container",
 
-      initialize: function () {
-          this.render();
-      },
-      render: function () {
-          plateList.each((plate) => {
-              let model = new LicensePlateView({model: plate});
-              this.$el.append(model.render().el);
-          });
-          return this;
-      }
+    initialize: function () {
+      this.render();
+    },
+    render: function () {
+      plateList.each((plate) => {
+        let model = new LicensePlateView({model: plate});
+        this.$el.append(model.render().el);
+      });
+      return this;
+    }
   });
 
   // New instance of the App
   var app = new AppView();
 });
-

@@ -7,17 +7,17 @@ const storage = require('./plates-storage');
 
 // Create a server with a host and port
 const server = new Hapi.Server({
-    debug: { request: ['error'] },
-    connections: {
-        routes: {cors: true}
-    }
+  debug: { request: ['error'] },
+  connections: {
+    routes: {cors: true}
+  }
 });
 
 server.register({
     register: require('inert')
 }, (err) => {
     if (err) {
-        console.log('Failed loading plugin');
+      console.log('Failed loading plugin');
     }
 });
 server.connection({ host: 'localhost', port: 8000 });
@@ -25,25 +25,23 @@ server.connection({ host: 'localhost', port: 8000 });
 server.route(cartRoutes);
 
 server.route({
-    method: 'GET',  path:'/data',
-    handler: function (request, reply) {
-        return reply(JSON.stringify(storage.plates));
-    }
+  method: 'GET',  path:'/data',
+  handler: function (request, reply) {
+    return reply(JSON.stringify(storage.plates));
+  }
 });
 
 server.route({
-    method: 'GET',
-    path: '/{param*}',
-    handler: {
-        directory: {
-            path: 'ui'
-        }
+  method: 'GET',
+  path: '/{param*}',
+  handler: {
+    directory: {
+      path: 'ui'
     }
+  }
 });
 
 // Start the server
 server.start((err) => {
-    console.log('Server running at:', server.info.uri);
+  console.log('Server running at:', server.info.uri);
 });
-
-
