@@ -15,7 +15,7 @@ license plates. Slowly integrating Marionette on top of Backbone and
 experimenting with Jasmine Testing Framework.
 
 
-![](https://github.com/vincehacks/BackboneJS/tree/master/Labs)
+![](https://github.com/vincehacks/BackboneJS/blob/master/Labs/Final%20Product.png)
 
 
 # Day 1
