@@ -14,6 +14,7 @@ creating the front-end for a website that allows users to shop for different US
 license plates. Slowly integrating Marionette on top of Backbone and
 experimenting with Jasmine Testing Framework.
 
+This was the final product: </br>
 
 ![](https://github.com/vincehacks/BackboneJS/blob/master/Labs/Final%20Product.png)
 
