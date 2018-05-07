@@ -2,9 +2,6 @@
 
 Created by Vince Chang </br>
 
-Instructor: Alain (Al)  </br>
-Email: al@interstate21.com </br>
-
 [Day 1](https://goo.gl/rGJiWv)
 
 [Day 2](https://goo.gl/vkEiye)
@@ -12,12 +9,14 @@ Email: al@interstate21.com </br>
 [Github](https://github.com/alcfeoh/di-backbone-js)
 
 
-# Day 1
-
-- This course illustrates the use of BackboneJS. The exercises in the labs are
-creating the front-end for a website that allows users to shop for different
+This course illustrates the use of BackboneJS. The exercises in the labs are
+creating the front-end for a website that allows users to shop for different US
 license plates. Slowly integrating Marionette on top of Backbone and
 experimenting with Jasmine Testing Framework.
+
+
+# Day 1
+
 
 #### Introduction to Backbone
 - In the past, all of the front-end code (HTML, JS, CSS) was generated from the

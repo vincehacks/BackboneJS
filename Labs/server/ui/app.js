@@ -2,15 +2,31 @@ $(function() {
 
   var LicensePlate = Backbone.Model.extend({});
 
-  var LicensePlateView = Marionette.View.extend({
-    template: '#plate-template',
+  // Creating a new CartItem MODEL
+  var CartItem = Backbone.Model.extend({
+    url: '/cart'
+  });
+
+  var LicensePlateView = Backbone.View.extend({
+    tagName:  "div",
+    attributes: {class: 'col-md-4', style: 'margin-top: 40px'},
+    // Create a new cart event
     events: {
-      "click .btn": "addToCart"
+      "click #buttonClick" : "newCartItem",
     },
-    addToCart: function(){
-      console.log("Adding to cart "+ this.model.get('title'));
-      var cartItem = new CartItem(this.model.attributes);
-      cartItem.save();
+    newCartItem: function() {
+      var newCart = new CartItem(this.model.attributes);
+      newCart.save();
+    },
+    initialize: function () {
+      this.render();
+    },
+    render: function () {
+      var source = $('#plate-template').html();
+      var template = Handlebars.compile(source);
+      var html = template(this.model.toJSON());
+      this.$el.html(html);
+      return this;
     }
   });
 
@@ -21,23 +37,20 @@ $(function() {
 
   var plateList = new LicensePlateList();
 
-  // Creating a new Marionette View
-  var StoreView = Marionette.CollectionView.extend({
-    childView: LicensePlateView
+  var AppView = Backbone.View.extend({
+
+    el: "#container",
+
+    initialize: function () {
+      this.listenTo(plateList, "add", this.addPlate);
+      plateList.fetch();
+    },
+    addPlate: function(plate) {
+      let model = new LicensePlateView({model: plate});
+      this.$el.append(model.render().el);
+    }
   });
 
-  // Creating a Marionette App
-  var App = Marionette.Application.extend({
-    // This is where to put the code...in the container this is I want to load
-    region: '#container',
-    // Calls the Marionette View
-    onStart: function() {
-      this.showView(new StoreView({collection:plateList}));
-      plateList.fetch();
-    }
-  })
-
-  var app = new App();
-  app.start();
+  var app = new AppView();
 
 });
