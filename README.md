@@ -1,5 +1,4 @@
 # BackboneJS
-
 Created by Vince Chang </br>
 
 [Day 1](https://goo.gl/rGJiWv)
