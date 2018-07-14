@@ -1,6 +1,6 @@
 $(function() {
 
-  var LicensePlate = Backbone.Model.extend({});
+
 
 
   var plates= [
@@ -86,13 +86,21 @@ $(function() {
   }
   ];
 
+  var LicensePlate = Backbone.Model.extend({});
+  var LicensePlateList = Backbone.Collection.extend({
+    model: LicensePlate
+  });
+  var plateList = new LicensePlateList(plates);
+
+
+
   // Define a new View for License Plates
   var LicensePlateView = Backbone.View.extend({
     tagName:  "div",
     attributes: {class: 'col-md-4', style: 'margin-top: 40px'},
 
     initialize: function () {
-      this.render();
+      this.render(); // it runs render automatically
     },
     // This is the new way of how Handlebars takes over!
     render: function(){
@@ -110,13 +118,6 @@ $(function() {
     }
   });
 
-  var LicensePlateList = Backbone.Collection.extend({
-    model: LicensePlate
-  });
-
-  var plateList = new LicensePlateList(plates);
-
-
   // Defining a View for App, this still uses Underscore, not handlebars!
   var AppView = Backbone.View.extend({
 
@@ -127,8 +128,8 @@ $(function() {
     },
     render: function () {
       plateList.each((plate) => {
-        let model = new LicensePlateView({model: plate});
-        this.$el.append(model.render().el);
+        let view = new LicensePlateView({model: plate});
+        this.$el.append(view.el);
       });
       return this;
     }

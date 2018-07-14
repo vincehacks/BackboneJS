@@ -1,5 +1,6 @@
 $(function() {
 
+  // This is the MODEL
   var LicensePlate = Backbone.Model.extend({});
 
   var plates= [
@@ -85,7 +86,8 @@ $(function() {
     }
   ];
 
-  // This is the MODEL
+
+  // This is the VIEW
   var LicensePlateView = Backbone.View.extend({
     tagName:  "div",
     attributes: {class: 'col-md-4', style: 'margin-top: 40px'},
@@ -99,12 +101,14 @@ $(function() {
     }
   });
 
-  // Write your Backbone Collection and App code here
-
   // Defining a Collection of License Plates & creating an instance of it
+  // Collections are just a group of models
   var PlateCollection = Backbone.Collection.extend({
     model: LicensePlate
   });
+
+  // Create a new instance of a collection and pass in plate data which is
+  // passed to the model
   var myCollection = new PlateCollection(plates);
 
   // Defining a App to view the collection
