@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Macy's.com</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="app.js"></script>
+</head>
+<body>
+  <!-- NAVBAR CODE -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">Macy's.com</a>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Stores<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Deals<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+      </form>
+    </div>
+  </nav>
+  <!-- BODY OF THE CODE -->
+  <script type="text/template" id="product-template">
+    <div class="product-info" id="firstSection">
+      <div>
+        <h1 class="page-title">{{page-title}}<h1>
+      </div>
+      <div>
+        <img src="{{product-image}}" width="300"/>
+        <h1>{{product-title}}</h1>
+        <h4>{{price}}</h4>
+        <p>{{product-description}}</p>
+        <div class="facets" id="choices">
+          <!-- <form> -->
+          <div>
+            <div>
+              Size:
+              <select>
+                <option name="Size" value="Small">Small</option>
+                <option name="Size" value="Medium">Medium</option>
+                <option name="Size" value="Large">Large</option>
+              </select>
+            </div>
+            </br>
+            <div>
+              Color:
+              <select>
+                <option name="Color" value="Red">Red</option>
+                <option name="Color" value="Black">Black</option>
+                <option name="Color" value="Grey">Grey</option>
+              </select>
+            </div>
+            </br>
+            <div>
+              Quantity:
+              <input name="Quantity"></input>
+            </div>
+            </br>
+            </br>
+            <button class="btn btn-lg btn-primary btn-finished" onclick="showShipping()" type="submit">Next</button>
+          <!-- </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="shipping-info" hidden>
+      <h5>Shipping Information</h5>
+      <input name="Full Name" type="text" class="form-control" placeholder="Full Name" required></br>
+      <input name="Address One" type="text" class="form-control" placeholder="Address One" required></br>
+      <input name="Address Two" type="text" class="form-control" placeholder="Address Two" required></br>
+      <input name="City" type="text" class="form-control" placeholder="City" required></br>
+      <input name="State" type="text" class="form-control" placeholder="State" required></br>
+      <input name="Zip Code" type="text" class="form-control" placeholder="Zip Code" required maxlength="5"></br>
+      <input name="Phone Number" type="text" class="form-control" placeholder="Phone Number" required maxlength="10"></br>
+      <input name="Email" type="text" class="form-control" placeholder="Email address" required minlength="3" maxlength="64"></br>
+      <button class="btn btn-lg btn-primary btn-finished" onclick="showCheckout()" type="submit">Finished</button>
+    </form>
+    <hr>
+    <div id="checkout" hidden>
+      <h5>Selected Product:</h5>
+      <img src="{{product-image}}" width="300"/>
+      <p>{{product-title}}</p>
+      <p>{{price}}</p>
+      <p>{{product-description}}</p>
+      <h5>Will be shipped to:</h5>
+      <p id="recipt"></p>
+    <hr>
+    </div>
+  <script>
+    // Final return
+    var checkoutInfo = "";
+
+    // Do this when NEXT button is clicked
+    function showShipping() {
+      // Show Shipping form & hide the rest
+      $('.shipping-info').attr("hidden", false);
+      // $('#firstSection').attr("hidden", true);
+
+      // Grab the user's choices and append info to arr1
+      // var arr1 = "";
+      // var userChoices = ($("#choices").serializeArray());
+      // console.log('im here!!!!!');
+      // console.log(userChoices);
+      //
+      //
+      // userChoices.forEach(function(e) {
+      //   arr1 += `${e.name}: ${e.value}\n`;
+      // });
+      //
+      // // Append info from first section
+      // checkoutInfo += arr1;
+      //
+      // console.log(checkoutInfo);
+    };
+
+    // Do this when FINISHED button is clicked
+    function showCheckout() {
+
+      // Show checkout info
+      $('#checkout').attr("hidden", false);
+
+      // Grab the user's shipping info
+      var arr2 = "";
+      var shipInfo = ($("#shippingInfo").serializeArray());
+      shipInfo.forEach(function(e) {
+        arr2 += `${e.name}: ${e.value}\n`;
+      });
+
+      // Append info from second section and insert into HTML
+      checkoutInfo += arr2;
+      console.log("hiiiiiii");
+      console.log(checkoutInfo);
+      $("#recipt").append(checkoutInfo);
+    };
+  </script>
+
+  <!-- Main Content is injected here by Backbone! -->
+  <div class="big-container"></div>
+
+  </body>
+</html>
