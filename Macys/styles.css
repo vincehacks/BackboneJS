@@ -21,6 +21,15 @@ body {
   display: flex;
   justify-content: space-between;
 }
+/* #sizeOpt {
+  margin-left: 40px;
+}
+#colorOpt {
+  margin-left: 32px;
+}
+#quantityOpt {
+  margin-left: 9px;
+} */
 .facets{
   width: 20%;
 }

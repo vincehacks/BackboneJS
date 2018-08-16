@@ -54,7 +54,7 @@
             </br>
             </br>
         </div>
-          <button class="btn btn-lg btn-prop" onclick="showShipping()" type="button">Next</button>
+          <button class="btn btn-lg btn-prop" id="next-transaction" type="button">Next</button>
           <hr>
           </form>
       </div>
@@ -68,7 +68,7 @@
       <input name="Zip Code" type="text" class="form-control" placeholder="Zip Code" required maxlength="5"></br>
       <input name="Phone Number" type="text" class="form-control" placeholder="Phone Number" required maxlength="10"></br>
       <input name="Email" type="text" class="form-control" placeholder="Email address" required minlength="3" maxlength="64"></br>
-      <button class="btn btn-lg btn-prop" onclick="showCheckout()" type="button">Finished</button>
+      <button class="btn btn-lg btn-prop" id="finish-transaction" type="button">Finished</button>
       <hr>
     </form>
     <div class="checkout" hidden>
@@ -84,33 +84,6 @@
       <p id="recipt2"></p>
     <hr>
     </div>
-  <script>
-
-    // Do this when NEXT button is clicked
-    function showShipping() {
-      // Show Shipping form & hide the rest
-      $('.shipping-info').attr("hidden", false);
-
-      // Grab the user's choices one at a time and append to recipt1
-      var userChoices = ($("#choices").serializeArray());
-      userChoices.forEach(function(e) {
-        $("#recipt1").append(`${e.name}: ${e.value}<br/>`);
-      });
-    };
-
-    // Do this when FINISHED button is clicked
-    function showCheckout() {
-      // Show checkout info & hide previous two sections
-      $('.checkout').attr("hidden", false);
-      $('.product-info').attr("hidden", true);
-      $('.shipping-info').attr("hidden", true);
-
-      // Grab the user's shipping info one at a time and append to recipt2
-      var shipInfo = ($(".shipping-info").serializeArray());
-      shipInfo.forEach(function(e) {
-        $("#recipt2").append(`${e.name}: ${e.value}<br/>`);
-      });
-    };
   </script>
 
   <!-- Main Content is injected here by Backbone! -->
