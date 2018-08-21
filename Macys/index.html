@@ -15,7 +15,17 @@
 </head>
 <body>
   <!-- BODY OF THE CODE -->
-  <script type="text/template" id="product-template">
+
+  <!-- This is the mainViewTemplate, all views are dumped into here! -->
+  <script type="text/template" id="mainViewTemplate">
+    <div id="productView"></div>
+    <button class="btn btn-lg btn-prop" id="nextButton" type="button">Next</button>
+    <div id="shippingView"></div>
+    <div id="checkoutView"></div>
+  </script>
+
+  <!-- This is productViewTemplate -->
+  <script type="text/template" id="productViewTemplate">
     <div class="product-info row">
       <div>
         <h1 class="page-title">{{page-title}}<h1>
@@ -54,11 +64,16 @@
             </br>
             </br>
         </div>
-          <button class="btn btn-lg btn-prop" id="next-transaction" type="button">Next</button>
+          <!-- <button class="btn btn-lg btn-prop" id="nextButton" type="button">Next</button> -->
           <hr>
           </form>
       </div>
     </div>
+  </script>
+
+
+  <!-- This is shippingViewTemplate -->
+  <script type="text/template" id="shippingViewTemplate">
     <form class="shipping-info" hidden>
       <h5>Shipping Information</h5>
       <input name="Full Name" type="text" class="form-control" placeholder="Full Name" required></br>
@@ -68,9 +83,13 @@
       <input name="Zip Code" type="text" class="form-control" placeholder="Zip Code" required maxlength="5"></br>
       <input name="Phone Number" type="text" class="form-control" placeholder="Phone Number" required maxlength="10"></br>
       <input name="Email" type="text" class="form-control" placeholder="Email address" required minlength="3" maxlength="64"></br>
-      <button class="btn btn-lg btn-prop" id="finish-transaction" type="button">Finished</button>
+      <button class="btn btn-lg btn-prop" id="finishButton" type="button">Finished</button>
       <hr>
     </form>
+  </script>
+
+  <!-- This is checkoutViewTemplate -->
+  <script type="text/template" id="checkoutViewTemplate">
     <div class="checkout" hidden>
       <h5>Selected Product:</h5>
       <div class="center-image">
