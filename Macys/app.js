@@ -1,131 +1,83 @@
 // Created by Vince Chang
-$(function() {
-  // Collection Data
+(function(){
+  /*****************************************************************************
+  * Backbone collection that holds information for each dress that is rendered *
+  *****************************************************************************/
   const items =[
     {
-      "page-title": "Women's Dresses",
-      "product-image": "https://slimages.macysassets.com/is/image/MCY/products/5/optimized/3903385_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
-      "product-description": "Sure to make the best-dressed list! A delicate lace bodice, alluring keyhole detail and high slit make this Nightway halter gown a show-stopping piece.",
       "product-title": "Nightway Lace Halter Gown",
+      "product-image": "https://tinyurl.com/y9j7b9so",
+      "product-description": "Sure to make the best-dressed list! A delicate " +
+      "lace bodice, alluring keyhole detail and high slit make this Nightway " +
+      " halter gown a show-stopping piece.",
       "price":"$109"
     },
     {
-      "page-title": "Women's Dresses",
-      "product-image": "https://slimages.macysassets.com/is/image/MCY/products/3/optimized/9956073_fpx.tif?op_sharpen=1&wid=1230&hei=1500&fit=fit,1&$filterxlrg$",
-      "product-description": "Updated with beauty of ruffled sleeves, this timeless Vince Camuto sheath dress works for all occasions.",
       "product-title": "Ruffle-Sleeve Sheath Dress",
+      "product-image": "https://tinyurl.com/yas3aps3",
+      "product-description": "Updated with beauty of ruffled sleeves, this " +
+      " timeless Vince Camuto sheath dress works for all occasions.",
       "price":"$138"
     }
   ];
 
-  // Create a Backbone Model
+  const channel = _.extend({}, Backbone.Events);
+
+  // Created a Backbone Model
   const ProductModel = Backbone.Model.extend({});
 
-  // Create a Backbone Collection that holds different models === (items)
+  // Created a Backbone Collection that holds different models which are items
   const ProductCollection = Backbone.Collection.extend({
     model: ProductModel
   });
 
-  // Create a new instance of that collection
+  // Created a new instance of the collection and pass in my items as the model
   const productCollection = new ProductCollection(items);
 
-  // Create a Backbone View to go with the Model
-  // const ProductView = Backbone.View.extend({
-  //   tagName: "div",
-  //
-  //   // This will happen automatically
-  //   initialize() {
-  //     this.render();
-  //   },
-  //   events:{
-  //     "click #next-transaction" : "showShipping",
-  //     "click #finish-transaction" : "showCheckout"
-  //   },
-  //   // Do this when NEXT button is clicked
-  //   showShipping() {
-  //     // Show Shipping form & hide the rest
-  //     $('.shipping-info').attr("hidden", false);
-  //
-  //     // Grab the user's choices one at a time and append to recipt1
-  //     let userChoices = ($("#choices").serializeArray());
-  //     userChoices.forEach((e) => {
-  //       $("#recipt1").append(`${e.name}: ${e.value}<br/>`);
-  //     });
-  //   },
-  //   // Do this when FINISHED button is clicked
-  //   showCheckout() {
-  //     // Show checkout info & hide previous two sections
-  //     $('.checkout').attr("hidden", false);
-  //     $('.product-info').attr("hidden", true);
-  //     $('.shipping-info').attr("hidden", true);
-  //
-  //     // Grab the user's shipping info one at a time and append to recipt2
-  //     let shipInfo = ($(".shipping-info").serializeArray());
-  //     shipInfo.forEach((e) => {
-  //       $("#recipt2").append(`${e.name}: ${e.value}<br/>`);
-  //     });
-  //   },
-  //   render(){
-  //     // Using jquery and handlebars to recognize the template I placed in
-  //     // my index.html file and dumps it into the div
-  //     const source = $('#product-template').html();
-  //     const template = Handlebars.compile(source);
-  //     const html = template(this.model.toJSON());
-  //     this.$el.html(html);
-  //     return this;
-  //   }
-  // });
-
-  // Create a new View that will call the individual view for each product
-  // const MainView = Backbone.View.extend({
-  //   // This is where to append the different items
-  //   el: ".big-container",
-  //
-  //   render() {
-  //     // Iterate through the collection and call ProductView to display items
-  //     // For each item, append the new view to the "big-container div"
-  //     this.collection.each((item) => {
-  //       let view = new ProductView({model:item});
-  //       this.$el.append(view.render().el);
-  //     });
-  //     return this;
-  //   }
-  // });
-  //
-  // // Create a new instance of the mainView and watch the magic happen!
-  // const mainView = new MainView({
-  //   collection: productCollection
-  // });
-  //
-  // // Call the mainView's render()
-  // mainView.render();
-
-
-
-
-/******************************************************************************/
-
-
-  // ProductView
+  /*****************************************************************************
+  * Name: ProductView
+  * Parameters: Backbone collection
+  * Description: Once an instance of ProductView is instantiated, the render()
+  * will compile the #productViewTemplate. Each item that is in my passed in
+  * collection will be appened to #productView
+  * Flow: Called in MainView
+  *****************************************************************************/
   const ProductView = Backbone.View.extend({
     el: "#productView",
     initialize(){
+      // Using Backbone channel to retrieve item selection from the user
+      channel.on('testChannel', this.getCollectionData.bind(this));
       this.render();
     },
     render(){
       const source = $('#productViewTemplate').html();
+      // Good place to check if the template was undefined or not
       const template = Handlebars.compile(source);
-      const html = template(this.model.toJSON());
-      this.$el.html(html);
-      // Why don't we return anything anymore? `return this`
+
+
+
+      // Iterate through collection of dresses and append items to #productView
+      this.collection.each((item) => {
+        this.$el.append(template(item.toJSON()));
+      });
+      return this;
+    },
+    /* getCollectionData() will  */
+    getCollectionData(){
+      console.log("productView");
+       channel.trigger("testdata",this.collection.toJSON());
     }
-  });
 
+    });
 
-
-
-
-  // ShippingView
+  /*****************************************************************************
+  * Name: ShippingView
+  * Parameters: None
+  * Description: Once an instance of ShippingView is instantiated, the render()
+  * will compile the #shippingViewTemplate, call showShipping(), and also listen
+  * for the finishButton to be clicked
+  * Flow: called when nextButton is clicked in MainView
+  *****************************************************************************/
   const ShippingView = Backbone.View.extend({
     el: "#shippingView",
     initialize(){
@@ -138,101 +90,111 @@ $(function() {
     render(){
       const source = $('#shippingViewTemplate').html();
       const template = Handlebars.compile(source);
-      const html = template(this.model.toJSON());
-      this.$el.html(html);
-      // Why don't we return anything anymore? `return this`
+      this.$el.html(template);
     },
-    // Do this when NEXT button is clicked
+    /* showShipping() will hide the nextButton and productView then will record
+     * user selected product information into #recept1 */
     showShipping() {
-      // Show Shipping form & hide the rest
+      $('.product-info').attr("hidden", true);
+      $('#nextButtonFlag').attr("hidden", true);
       $('.shipping-info').attr("hidden", false);
 
       // Grab the user's choices one at a time and append to recipt1
-      let userChoices = ($("#choices").serializeArray());
+      let userChoices = ($(".choices").serializeArray());
       userChoices.forEach((e) => {
         $("#recipt1").append(`${e.name}: ${e.value}<br/>`);
       });
     },
+    /* Once the user clicks on the finishButton, this function executes and
+     * instantiates a new instance of CheckoutView */
     initializeCheckout(){
       const checkoutView = new CheckoutView();
+      // $('#recipt-info').attr("hidden", false);
     }
   });
 
-
-
-
-
-  // CheckoutView
+  /*****************************************************************************
+  * Name: CheckoutView
+  * Parameters: None
+  * Description: Once an instance of CheckoutView is instantiated, the render()
+  * will compile the #checkoutViewTemplate and call showCheckout()
+  * Flow: called when finshButton is clicked in ShippingView
+  *****************************************************************************/
   const CheckoutView = Backbone.View.extend({
     el: "#checkoutView",
     initialize(){
-      this.render();
-      this.showCheckout();
+      channel.on("testdata",this.showCheckout,this);
+      channel.trigger("testChannel");
+      //this.render();
+      //this.showCheckout();
+      console.log("first");
     },
     render(){
+
+
+      // This turns on trigger
+
+      console.log(channelTriggered);
+    },
+    /* showShipping() will hide the shippingView then will record shipping
+     * information into #recept2 */
+    showCheckout(data) {
+      console.log("helooooooooo");
+      $('.shipping-info').attr("hidden", true);
       const source = $('#checkoutViewTemplate').html();
       const template = Handlebars.compile(source);
-      const html = template(this.model.toJSON());
-      this.$el.html(html);
-      // Why don't we return anything anymore? `return this`
-    },
-    // Do this when FINISHED button is clicked
-    showCheckout() {
-      // Show checkout info & hide previous two sections
-      $('.checkout').attr("hidden", false);
-      $('.product-info').attr("hidden", true);
-      $('.shipping-info').attr("hidden", true);
-
+      data.forEach((e)=> {
+        this.$el.append(template(e));
+      });
       // Grab the user's shipping info one at a time and append to recipt2
-      let shipInfo = ($(".shipping-info").serializeArray());
+     let shipInfo = ($(".shipping-info").serializeArray());
       shipInfo.forEach((e) => {
         $("#recipt2").append(`${e.name}: ${e.value}<br/>`);
       });
     }
   });
 
-
-
-  // Creating a main layout container that renders everything
-  const MainView = Backbone.View.extend({
-    el: "#mainViewTemplate",
+  /*****************************************************************************
+  * Name: MainView
+  * Parameters: None
+  * Description: This is the main container for the all 3 views. MainView will
+  * know about all the views.
+  * Once an instance of MainView is instantiated, the render()
+  * will compile the #mainViewTemplate and call renderProductView()
+  * The nextButton will also instantiate a new shippingView upon user click
+  * Flow: This is the start of the application!
+  *****************************************************************************/
+    const MainView = Backbone.View.extend({
+    el: ".big-container",
     // Happens automatically once the instance is created
-    intialize(){
-      this.render();
-      this.initializeCollection(); // ??????????????
-      this.renderProductView();
-      //this.listenTo("",callthisfunction)
-    },
+    // intialize(){
+    //   this.render();
+    //   this.renderProductView();
+    // },
     events:{
       "click #nextButton" : "initializeShippingView"
     },
     render(){
-      // Render the mainContainerTemplate
       const source = $('#mainContainerTemplate').html();
       const template = Handlebars.compile(source);
-      const html = template(this.model.toJSON());
-      this.$el.html(html);
+      this.$el.html(template);
       return this;
     },
-    intializeCollection(){
-      // Iterate through the collection and call ProductView to display items
-      // For each item, append the new view to the "big-container div"
-      this.collection.each((item) => {
-        let view = new ProductView({model:item});
-        this.$el.append(view.render().el);
-        // this.renderProductView({model:item});
-      });
-      return this;
-    },
+    /* renderProductView() will instantiate a new ProductView and show the items
+     * a user can purchase from the website */
     renderProductView(){
-      const productView = new ProductView();
+      const productView = new ProductView({collection: productCollection});
     },
+    /* initializeShippingView() will instantiate a new ShppingView once the user
+     * clicks on the nextButton */
     initializeShippingView(){
       const shippingView = new ShippingView();
     }
   });
 
-  // Create an instance of the mainContainer that starts the whole project
-  const mainView = new MainView(collection: productCollection);
+  // Create an instance of the mainContainer that starts the whole project!
+  const mainView = new MainView();
+  mainView.render();
+  mainView.renderProductView();
 
-});
+})();

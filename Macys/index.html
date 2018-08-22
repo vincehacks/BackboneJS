@@ -11,15 +11,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone-min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="./styles.css">
-  <script src="app.js"></script>
 </head>
 <body>
   <!-- BODY OF THE CODE -->
-
+  <div class="product-info row">
+    <h1 class="page-title">Women's Dresses<h1>
+  </div>
   <!-- This is the mainViewTemplate, all views are dumped into here! -->
-  <script type="text/template" id="mainViewTemplate">
+  <script type="text/template" id="mainContainerTemplate">
     <div id="productView"></div>
-    <button class="btn btn-lg btn-prop" id="nextButton" type="button">Next</button>
+    <div id="nextButtonFlag"><button class="btn btn-lg btn-prop" id="nextButton" type="button">Next</button><hr></div>
     <div id="shippingView"></div>
     <div id="checkoutView"></div>
   </script>
@@ -27,46 +28,39 @@
   <!-- This is productViewTemplate -->
   <script type="text/template" id="productViewTemplate">
     <div class="product-info row">
-      <div>
-        <h1 class="page-title">{{page-title}}<h1>
+      <div class="center-image">
+        <img src="{{product-image}}" width="300"/>
       </div>
-      <div>
-        <div class="center-image">
-          <img src="{{product-image}}" width="300"/>
-        </div>
-        <h1>{{product-title}}</h1>
-        <h4>{{price}}</h4>
-        <p>{{product-description}}</p>
-        <div class="facets">
-          <form id="choices">
-            <div class="options">
-              Size:
-              <select name="Size" >
-                <option name="Size" value="Small">Small</option>
-                <option name="Size" value="Medium">Medium</option>
-                <option name="Size" value="Large">Large</option>
-              </select>
-            </div>
-            </br>
-            <div class="options">
-              Color:
-              <select name="Color">
-                <option name="Color" value="Red">Red</option>
-                <option name="Color" value="Black">Black</option>
-                <option name="Color" value="Grey">Grey</option>
-              </select>
-            </div>
-            </br>
-            <div class="options">
-              Quantity:
-              <input name="Quantity" required></input>
-            </div>
-            </br>
-            </br>
-        </div>
-          <!-- <button class="btn btn-lg btn-prop" id="nextButton" type="button">Next</button> -->
-          <hr>
-          </form>
+      <h1>{{product-title}}</h1>
+      <h4>{{price}}</h4>
+      <p>{{product-description}}</p>
+      <div class="facets">
+        <form name="formname" class="choices">
+          <div class="options">
+            Size:
+            <select name="Size" >
+              <option name="Size" value="Small">Small</option>
+              <option name="Size" value="Medium">Medium</option>
+              <option name="Size" value="Large">Large</option>
+            </select>
+          </div>
+          </br>
+          <div class="options">
+            Color:
+            <select name="Color">
+              <option name="Color" value="Red">Red</option>
+              <option name="Color" value="Black">Black</option>
+              <option name="Color" value="Grey">Grey</option>
+            </select>
+          </div>
+          </br>
+          <div class="options">
+            Quantity:
+            <input name="Quantity" required></input>
+          </div>
+          </br>
+          </br>
+        </form>
       </div>
     </div>
   </script>
@@ -90,7 +84,7 @@
 
   <!-- This is checkoutViewTemplate -->
   <script type="text/template" id="checkoutViewTemplate">
-    <div class="checkout" hidden>
+    <div class="checkout">
       <h5>Selected Product:</h5>
       <div class="center-image">
         <img src="{{product-image}}" width="300"/>
@@ -101,12 +95,20 @@
       <p id="recipt1"></p>
       <h5>Will be shipped to:</h5>
       <p id="recipt2"></p>
-    <hr>
+      <hr>
     </div>
   </script>
 
+  <!-- <div class="checkout" id="recipt-info" hidden>
+    <h5>Will be shipped to:</h5>
+    <p id="recipt2"></p>
+    <hr>
+  </div> -->
+
   <!-- Main Content is injected here by Backbone! -->
   <div class="big-container"></div>
+
+  <script src="./app.js"></script>
 
   </body>
 </html>
